@@ -5,6 +5,7 @@ const express = require("express")
 const morgan = require("morgan")
 const mongoose = require("./models/connection")
 const path = require("path")
+const MateriaRouter = require("./controllers/materia_controllers")
 const middleware = require("./utils/middleware")
 const Materia = require("./models/materia")
 
@@ -15,69 +16,15 @@ const app = express()
 //middleware
 middleware(app)
 
-
-//Routes
-
-
-//landing
+//landing router
 app.get("/", (req, res) => {
     res.send("Welcome to my Materia API")
 })
 
-//index 
-app.get("/materias", (req, res)=> {
-    Materia.find({})
-        .then((materias) => {
-            res.json({ materias: materias})
-        })
-        .catch((error) => {
-            res.json({ error })
-        })
-})
+//register materia routes
+app.use('/materias', MateriaRouter)
 
-//create
-app.post("/materias", (req, res) => {
-    Materia.create(req.body)
-        .then(materia => {
-            res.json({materia: materia.toObject()})
-        })
-        .catch(err => console.log(err))
-})
 
-//update 
-app.put("/materias/:id", (req,res) => {
-    const id = req.params.id
-    //we'll use a single mongoose model method for now but this will need to be updated. FindByIdandUpdate needs and id, a req.body, and whether the info is new
-    Materia.findByIdAndUpdate(id,req.body, {new: true})
-        .then(materia => {
-            console.log('updated', materia)
-            res.sendStatus(204)
-        })
-        .catch(err => console.log(err))
-
-})
-
-//delete 
-app.delete('/materias/:id', (req,res) => {
-    const id = req.params.id
-    Materia.findByIdAndRemove(id)
-    .then(materia => {
-        res.sendStatus(204)
-    })
-    .catch(err => console.log(err))
-})
-
-//show
-app.get('/materias/:id', (req,res) => {
-    const id = req.params.id
-    Materia.findById(id)
-        .then(materia => {
-            console.log(materia)
-            res.json({materia: materia})
-        })
-        .catch(err => console.log(err))
-
-})
 
 
 //Server listener
