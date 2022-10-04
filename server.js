@@ -17,24 +17,7 @@ middleware(app)
 
 
 //Routes
-//seed
-app.get("/materias/seed", (req, res) => {
-    //starting materia for testing purposes
-    const startMaterias = [
-        {name: "Fire", color: "green", maxAP: 55000, common: true},
-        {name: "Restore", color: "green", maxAP: 85000, common: true},
-        {name: "Knights of the Round", color: "red", maxAP: 1000000, common: false},
-        {name: "All", color: "blue", maxAP: 60000, common: true}
-    ]
-    //delete all materias
-    Materia.deleteMany({}).then((materias) => {
-        //seed
-        Materia.create(startMaterias)
-            .then((Materias) => {
-                res.json(Materias)
-            })
-    })
-})
+
 
 //landing
 app.get("/", (req, res) => {
