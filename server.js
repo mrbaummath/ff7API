@@ -1,12 +1,14 @@
 //Import dependencies
 
-require("dotenv").config()
+require("dotenv").config
 const express = require("express")
 const morgan = require("morgan")
-const mongoose = require("mongoose")
 const path = require("path")
+// const mongoose = require("./models/connection.js")
 
-//database connection
+const mongoose = require("mongoose")
+
+//connect to db
 const DATABASE_URL = process.env.DATABASE_URL
 const CONFIG = {
     useNewUrlParser: true,
@@ -142,4 +144,5 @@ app.get('/materias/:id', (req,res) => {
 
 //Server listener
 const PORT = process.env.PORT
+
 app.listen(PORT, () => console.log(`Now listening on port ${PORT}`))
