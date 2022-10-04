@@ -5,6 +5,7 @@ const express = require("express")
 const morgan = require("morgan")
 const mongoose = require("./models/connection")
 const path = require("path")
+const middleware = require("./utils/middleware")
 const Materia = require("./models/materia")
 
 
@@ -12,11 +13,7 @@ const Materia = require("./models/materia")
 const app = express()
 
 //middleware
-app.use(morgan("tiny"))
-app.use(express.urlencoded({ extended: true })) 
-app.use(express.static("public")) 
-app.use(express.json())
-
+middleware(app)
 
 
 //Routes
