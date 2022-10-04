@@ -3,11 +3,11 @@
 require("dotenv").config()
 const express = require("express")
 const morgan = require("morgan")
-const mongoose = require("./models/connection")
 const path = require("path")
 const MateriaRouter = require("./controllers/materia_controllers")
+const UserRouter = require("./controllers/user_controllers")
 const middleware = require("./utils/middleware")
-const Materia = require("./models/materia")
+
 
 
 //application object
@@ -23,6 +23,8 @@ app.get("/", (req, res) => {
 
 //register materia routes
 app.use('/materias', MateriaRouter)
+//register user routes
+app.use('/users', UserRouter)
 
 
 
