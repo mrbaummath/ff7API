@@ -1,26 +1,12 @@
 //Import dependencies
 
-require("dotenv").config
+require("dotenv").config()
 const express = require("express")
 const morgan = require("morgan")
+const mongoose = require("./models/connection")
 const path = require("path")
-// const mongoose = require("./models/connection.js")
 
-const mongoose = require("mongoose")
 
-//connect to db
-const DATABASE_URL = process.env.DATABASE_URL
-const CONFIG = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}
-
-mongoose.connect(DATABASE_URL, CONFIG)
-
-mongoose.connection
-    .on("open", () => console.log("Connected to db"))
-    .on("close", () => console.log("Disconnected from db"))
-    .on("error", (err) => console.error(err))
 
 //create materia model schema
 const { Schema, model } = mongoose
