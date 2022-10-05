@@ -16,8 +16,18 @@ router.get("/", (req, res)=> {
         })
 })
 
+//index by ownership
+router.get("/mine", (req, res) => {
+    Materia.find({ owner: req.session.userId })
+        .then(materias => {
+            res.status(200).json({ materias: materias })
+        })
+        .catch(err => console.log(err))
+})
+
 //create
 router.post("/", (req, res) => {
+    req.body.owner = req.session.userId
     Materia.create(req.body)
         .then(materia => {
             res.json({materia: materia.toObject()})
