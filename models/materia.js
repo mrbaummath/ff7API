@@ -22,6 +22,9 @@ const materiasSchema = new Schema({
     common: {
         type: Boolean,
         required: true
+    },
+    owner: {
+        type: Schema.Types.ObjectId
     }
 })
 
