@@ -32,6 +32,7 @@ router.post('/login', (req, res) => {
             const result = await bcrypt.compare(password, user.password)
             if (result) {
                 req.session.username = username
+                req.session.loggedIn = true
                 req.session.userId = user.id
                 res.status(201).json({ user: user.toObject() })
             } else {

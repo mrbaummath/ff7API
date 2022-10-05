@@ -38,22 +38,38 @@ router.post("/", (req, res) => {
 //update 
 router.put("/:id", (req,res) => {
     const id = req.params.id
-    //we'll use a single mongoose model method for now but this will need to be updated. FindByIdandUpdate needs and id, a req.body, and whether the info is new
-    Materia.findByIdAndUpdate(id,req.body, {new: true})
-        .then(materia => {
-            console.log('updated', materia)
-            res.sendStatus(204)
+    const userId = req.session.userId
+    Materia.findById(id)
+        .then((materia) => {
+            if (!req.session.loggedIn || userId != materia.owner) {
+                res.sendStatus(401)
+            } else {
+                materia.updateOne(req.body)
+                    .then(query => {
+                        console.log('updated', query)
+                        res.sendStatus(204)
+                    })
+                    .catch(err => res.json(err))
+            }
         })
-        .catch(err => console.log(err))
-
+        .catch(err => res.json(err))
 })
 
 //delete 
 router.delete('/:id', (req,res) => {
     const id = req.params.id
-    Materia.findByIdAndRemove(id)
-    .then(materia => {
-        res.sendStatus(204)
+    const userId = req.session.userId
+    Materia.findById(id)
+        .then(materia => {
+            if (!req.session.loggedIn || userId != materia.owner) {
+                res.sendStatus(401)
+            } else {
+                materia.deleteOne()
+                    .then(query => {
+                        res.sendStatus(204)
+                    })
+                    .catch(err => {console.log(err)})
+            }
     })
     .catch(err => console.log(err))
 })
