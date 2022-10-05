@@ -1,5 +1,7 @@
 //import dependencies
-const mongoose = require("./connection") 
+const mongoose = require("./connection.js") 
+const User = require('./user.js')
+const spellSchema = require('./spell.js')
 
 //create materia model schema
 const { Schema, model } = mongoose
@@ -24,8 +26,10 @@ const materiasSchema = new Schema({
         required: true
     },
     owner: {
-        type: Schema.Types.ObjectId
-    }
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    spells: [spellSchema]
 })
 
 //create model
