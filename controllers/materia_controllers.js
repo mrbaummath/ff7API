@@ -10,6 +10,7 @@ router.get("/", (req, res)=> {
     Materia.find({})
         .then((materias) => {
             res.json({ materias: materias})
+            return
         })
         .catch((error) => {
             res.json({ error })
@@ -21,6 +22,7 @@ router.get("/mine", (req, res) => {
     Materia.find({ owner: req.session.userId })
         .then(materias => {
             res.status(200).json({ materias: materias })
+            return
         })
         .catch(err => console.log(err))
 })
@@ -31,6 +33,7 @@ router.post("/", (req, res) => {
     Materia.create(req.body)
         .then(materia => {
             res.json({materia: materia.toObject()})
+            return
         })
         .catch(err => console.log(err))
 })
@@ -43,11 +46,13 @@ router.put("/:id", (req,res) => {
         .then((materia) => {
             if (!req.session.loggedIn || userId != materia.owner) {
                 res.sendStatus(401)
+                return
             } else {
                 materia.updateOne(req.body)
                     .then(query => {
                         console.log('updated', query)
                         res.sendStatus(204)
+                        return
                     })
                     .catch(err => res.json(err))
             }
@@ -63,10 +68,12 @@ router.delete('/:id', (req,res) => {
         .then(materia => {
             if (!req.session.loggedIn || userId != materia.owner) {
                 res.sendStatus(401)
+                return
             } else {
                 materia.deleteOne()
                     .then(query => {
                         res.sendStatus(204)
+                        return
                     })
                     .catch(err => {console.log(err)})
             }
@@ -81,6 +88,7 @@ router.get('/:id', (req,res) => {
         .then(materia => {
             console.log(materia)
             res.json({materia: materia})
+            return
         })
         .catch(err => console.log(err))
 

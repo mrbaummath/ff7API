@@ -35,12 +35,15 @@ router.post('/login', (req, res) => {
                 req.session.loggedIn = true
                 req.session.userId = user.id
                 res.status(201).json({ user: user.toObject() })
+                return
             } else {
                 res.json({ error: 'username or password incorrect' })
+                return
             }
 
         } else {
             res.json({ error: 'user dne' })
+            return
         }
     })
     .catch(err => {
@@ -55,6 +58,7 @@ router.delete('/logout', (req,res) => {
         console.log('logged out', req.session)
         console.log('error on logout?', err)
         res.sendStatus(204)
+        return
     })
 })
 
