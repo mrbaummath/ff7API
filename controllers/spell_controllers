@@ -17,7 +17,6 @@ router.all('/:materiaId', (req,res) => {
         req.body.owner = req.session.userId
         Materia.findById(materiaId)
             .then(materia => {
-                console.log(materia.owner, req.session.userId)
                 if (materia.owner != req.session.userId) {
                     res.sendStatus(401)
                     return
@@ -30,6 +29,28 @@ router.all('/:materiaId', (req,res) => {
             })
             .catch(err => console.log(err))
     }
+})
+
+//delete spell
+router.delete('/delete/:materiaId/:spellId', (req,res) => {
+    const materiaId = req.params.materiaId
+    const spellId = req.params.spellId
+    const userId = req.session.userId
+    Materia.findById(materiaId)
+        .then(materia => {
+            const spell = materia.spells.id(spellId)
+            console.log(spell, materia)
+            if (!req.session.loggedIn || materia.owner != userId) {
+                res.sendStatus(401)
+                return
+            } else {
+                spell.remove()
+                materia.save()
+                res.sendStatus(204)
+                return
+            }
+        })
+        .catch(err => console.log(err))
 })
 
 //export
