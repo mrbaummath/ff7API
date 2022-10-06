@@ -1,0 +1,30 @@
+{% layout 'layout.liquid' %}
+
+{% block content %}
+  <div>
+    <h2 class="display-6">All Materia</h2>
+    <div class="row">
+      {% for materia in materias %}
+        <div class="card">
+          <h5 class="card-header">{{ materia.name }}
+          </h5>
+          <img class="card-img-top img-fluid img-thumbnail" src="/images/{{materia.color}}.jpeg">
+          <div class="card-body">
+            <h5 class="card-title">
+              {% if materia.common==false %}
+                RARE
+              {% endif %}
+            </h5>
+            <p class="card-text">
+              {{ materia.name }} is a {{ materia.color }} materia
+            </p>
+            <a class="btn btn-info" href="/materias/{{ materia.id }}">
+              View {{ materia.name }}
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+{% endblock %}
