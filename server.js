@@ -6,6 +6,7 @@ const morgan = require("morgan")
 const path = require("path")
 const MateriaRouter = require("./controllers/materia_controllers")
 const UserRouter = require("./controllers/user_controllers")
+const spellRouter = require("./controllers/spell_controllers")
 const middleware = require("./utils/middleware")
 
 
@@ -25,6 +26,8 @@ app.get("/", (req, res) => {
 app.use('/materias', MateriaRouter)
 //register user routes
 app.use('/users', UserRouter)
+//register spell routes
+app.use('/spells', spellRouter)
 
 
 

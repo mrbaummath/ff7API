@@ -1,0 +1,36 @@
+//import dependencies
+const express = require('express')
+const Materia = require('../models/materia')
+
+//create Router
+const router = express.Router()
+
+//Routes
+
+//create spell
+router.all('/:materiaId', (req,res) => {
+    if(!req.session.loggedIn) {
+        res.sendStatus(401)
+        return
+    } else {
+        const materiaId = req.params.materiaId
+        req.body.owner = req.session.userId
+        Materia.findById(materiaId)
+            .then(materia => {
+                console.log(materia.owner, req.session.userId)
+                if (materia.owner != req.session.userId) {
+                    res.sendStatus(401)
+                    return
+                } else {
+                    materia.spells.push(req.body)
+                    materia.save()
+                    res.sendStatus(201)
+                    return
+                }
+            })
+            .catch(err => console.log(err))
+    }
+})
+
+//export
+module.exports = router
