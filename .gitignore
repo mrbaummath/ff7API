@@ -1,2 +1,4 @@
 /node_modules
 .env
+.vscode
+public/.DS_Store

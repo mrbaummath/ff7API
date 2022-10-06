@@ -11,7 +11,8 @@ const router = express.Router()
 router.get("/", (req, res)=> {
     Materia.find({})
         .then((materias) => {
-            res.json({ materias: materias})
+            const { username, loggedIn, userId } = req.session
+            res.render('materias/index', { materias, username, loggedIn, userId })
             return
         })
         .catch((error) => {
