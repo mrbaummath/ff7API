@@ -17,9 +17,11 @@ const app = require("liquid-express-views")(express())
 //middleware
 middleware(app)
 
-//landing router
+//home routes
+
+//GET route
 app.get("/", (req, res) => {
-    res.send("Welcome to my Materia API")
+    res.render('index')
 })
 
 //register materia routes

@@ -5,7 +5,9 @@ const Materia = require('../models/materia')
 //create router
 const router = express.Router()
 
-//index 
+//index routes
+
+//GET route for showing all
 router.get("/", (req, res)=> {
     Materia.find({})
         .then((materias) => {
