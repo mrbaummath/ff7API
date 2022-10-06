@@ -1,8 +1,8 @@
 //Import dependencies
 
-const express = require("express")
-const User = require("../models/user.js")
-const bcrypt = require("bcryptjs")
+const express = require('express')
+const User = require('../models/user')
+const bcrypt = require('bcryptjs')
 
 //create Router
 const router = express.Router()

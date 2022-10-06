@@ -1,9 +1,9 @@
 //import dependencies
-require("dotenv").config()
-const MongoStore = require("connect-mongo")
-const express = require("express") // import express
-const morgan = require("morgan") // import morgan
-const session = require("express-session")
+require('dotenv').config()
+const MongoStore = require('connect-mongo')
+const express = require('express') // import express
+const morgan = require('morgan') // import morgan
+const session = require('express-session')
 
 
 //middleware function

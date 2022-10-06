@@ -1,7 +1,7 @@
 //import dependencies
-const mongoose = require('./connection.js')
-const Materia = require('./materia.js')
-const User = require('./user.js')
+const mongoose = require('./connection')
+const Materia = require('./materia')
+const User = require('./user')
 
 const db = mongoose.connection
 
