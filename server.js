@@ -12,7 +12,7 @@ const middleware = require("./utils/middleware")
 
 
 //application object
-const app = express()
+const app = require("liquid-express-views")(express())
 
 //middleware
 middleware(app)
