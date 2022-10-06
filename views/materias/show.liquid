@@ -1,0 +1,29 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+  <div class="container-md">
+    <article>
+      <h2>{{materia.name}}
+      </h2>
+      <h4>
+        {% if materia.common == false %}
+          This is a RARE materia type
+        {% else %}
+          This is a common materia type
+        {% endif %}
+      </h4>
+      <h4>The color of the materia is {{materia.color}}</h4>
+      {% if materia.owner == userId %}
+        <div class="btn-group">
+          <a class="btn btn-primary" href="/materias/edit/{{materia.id}}">edit</a>
+          <form action="/materias/{{materia.id}}?_method=DELETE" method="POST">
+            <input class="btn btn-danger" type="submit" value="delete">
+          </form>
+        </div>
+      {% endif %}
+      <img class="img-fluid" src="/images/{{materia.color}}.jpeg">
+    </article>
+    <article>
+        TBD: Spells for this materia
+    </article>
+  </div>
+{% endblock %}

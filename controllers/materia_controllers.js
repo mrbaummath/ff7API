@@ -20,22 +20,32 @@ router.get("/", (req, res)=> {
         })
 })
 
-//index by ownership
+//GET route for index by ownership
 router.get("/mine", (req, res) => {
     Materia.find({ owner: req.session.userId })
         .then(materias => {
-            res.status(200).json({ materias: materias })
+            const { username, loggedIn, userId } = req.session
+            res.render('materias/index', { materias, username, loggedIn, userId } )
             return
         })
         .catch(err => console.log(err))
 })
 
 //create
+
+//GET
+router.get("/new", (req, res) => {
+    const { username, loggedIn, userId } = req.session
+    res.render('materias/new', { username, loggedIn, userId })
+})
+
+//POST
 router.post("/", (req, res) => {
     req.body.owner = req.session.userId
+    req.body.common = req.body.common === 'on' ? false : true
     Materia.create(req.body)
         .then(materia => {
-            res.json({materia: materia.toObject()})
+            res.redirect('/materias')
             return
         })
         .catch(err => console.log(err))
@@ -75,7 +85,7 @@ router.delete('/:id', (req,res) => {
             } else {
                 materia.deleteOne()
                     .then(query => {
-                        res.sendStatus(204)
+                        res.redirect('/materias')
                         return
                     })
                     .catch(err => {console.log(err)})
@@ -89,8 +99,8 @@ router.get('/:id', (req,res) => {
     const id = req.params.id
     Materia.findById(id)
         .then(materia => {
-            console.log(materia)
-            res.json({materia: materia})
+            const { username, loggedIn, userId } = req.session
+            res.render('materias/show', { materia, username, loggedIn, userId } )
             return
         })
         .catch(err => console.log(err))

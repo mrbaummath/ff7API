@@ -9,7 +9,14 @@ const router = express.Router()
 
 //Routes
 
-//signup
+//signup routes
+
+//GET route
+router.get('/signup', (req, res) => {
+    res.render('users/signup')
+})
+
+//POST route
 router.post('/signup', async (req, res) => {
     req.body.password = await bcrypt.hash(
         req.body.password,
@@ -24,6 +31,13 @@ router.post('/signup', async (req, res) => {
 })
 
 //login 
+
+//GET route for login
+router.get('/login', (req, res) => {
+    res.render('users/login')
+})
+
+//POST route for login
 router.post('/login', (req, res) => {
     const { username, password } = req.body
     User.findOne({ username })
@@ -34,7 +48,7 @@ router.post('/login', (req, res) => {
                 req.session.username = username
                 req.session.loggedIn = true
                 req.session.userId = user.id
-                res.status(201).json({ user: user.toObject() })
+                res.redirect('/materias')
                 return
             } else {
                 res.json({ error: 'username or password incorrect' })
@@ -53,6 +67,9 @@ router.post('/login', (req, res) => {
 })
 
 //logout
+
+//delete
+
 router.delete('/logout', (req,res) => {
     req.session.destroy(err => {
         console.log('logged out', req.session)
