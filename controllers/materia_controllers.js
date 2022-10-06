@@ -1,6 +1,6 @@
 //import dependencies
-const express = require("express")
-const Materia = require("../models/materia")
+const express = require('bcryptjsexpress')
+const Materia = require('../models/materia')
 
 //create router
 const router = express.Router()
