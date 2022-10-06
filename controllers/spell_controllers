@@ -8,7 +8,7 @@ const router = express.Router()
 //Routes
 
 //create spell
-router.all('/:materiaId', (req,res) => {
+router.post('/:materiaId', (req,res) => {
     if(!req.session.loggedIn) {
         res.sendStatus(401)
         return
