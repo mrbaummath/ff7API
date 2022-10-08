@@ -1,0 +1,64 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+  <div class="container-md">
+    <article>
+      <h2>{{materia.name}}
+      </h2>
+      <h4>
+        {% if materia.common == false %}
+          This is a RARE materia type
+        {% else %}
+          This is a common materia type
+        {% endif %}
+      </h4>
+      <h4>The color of the materia is {{materia.color}}</h4>
+      {% if materia.owner == userId %}
+        <div class="btn-group">
+          <a class="btn btn-primary" href="/materias/edit/{{materia.id}}">edit</a>
+          <form action="/materias/{{materia.id}}?_method=DELETE" method="POST">
+            <input class="btn btn-danger" type="submit" value="delete">
+          </form>
+        </div>
+      {% endif %}
+      <img class="img-fluid" src="/images/{{materia.color}}.jpeg">
+    </article>
+    <hr>
+    <h4>Spells this Materia can cast</h4>
+    <hr>
+    {% if materia.spells.length > 0 %}
+      <div class="container-sm justify-content-center">
+        <div class="col-md-8 col-lg-6">
+          {% for spell in materia.spells %}
+            {% render './spell.liquid', spell: spell, userId: userId, materia:materia %}
+          {% endfor %}
+        </div>
+      </div>
+    {% else %}
+      <small>No spells yet</small>
+    {% endif %}
+  </div>
+  <hr>
+  {% if loggedIn %}
+      <div class="col-md-6">
+        <form action="/spells/{{materia.id}}" method="POST">
+          <fieldset>
+            <legend>Add a spell:</legend>
+            <label class="form-label">Name:</label>
+            <input class="form-control" type="text" placeholer="spell name" name="name" required>
+            <label class="form-label">MP to cast:</label>
+            <input class="form-control" type="number" placeholer="mp cost" name="mpCost" required>
+            <label class="form-label">AP to unlock:</label>
+            <input class="form-control" type="number" placeholer="ap needed" name="apReq" required>
+          </fieldset>
+          <input class="btn btn-success" type="submit" value="add spell">
+        </form>
+
+      </div>
+    {% else %}
+      <div class="col-md-6">
+        <p>If you'd like to add a spell please login</p>
+      </div>
+    {% endif %}
+
+
+{% endblock %}

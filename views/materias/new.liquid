@@ -1,0 +1,22 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+
+    <div class="container-sm">
+        <form action="/materias" method="POST">
+            <fieldset>
+                <legend>Create New Materia</legend>
+                <label class="form-label">Name: </label>
+                <input class="form-control" type="text" name="name" placeholder="enter the name of the Materia" required>    
+                <label class="form-label">Color: </label>
+                <input class="form-control" type="text" name="color" placeholder="enter the color of the Materia" required>
+                <label class="form-label">AP to Master: </label>
+                <input class="form-control" type="number" name="maxAP" placeholder="How much AP to master?" required> 
+                <label class="form-label">Rare? </label>
+                <input class="form-check-input" type="checkbox" name="common">
+            </fieldset>
+            <input clas="btn btn-success" type="submit" value="Create New Materia">
+        </form>
+    </div>
+
+
+{% endblock %}

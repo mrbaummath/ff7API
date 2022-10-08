@@ -1,0 +1,18 @@
+.btn {
+    margin: 5px;
+}
+
+body {
+    background-color: blueviolet
+}
+
+.img-fluid {
+    max-width: 80%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.card {
+    margin: 5px;
+    background-color: orange
+}
