@@ -50,25 +50,45 @@ router.post("/", (req, res) => {
 })
 
 //update 
+
+//GET edit page 
+router.get('/edit/:id', (req,res) => {
+    console.log(req.session)
+    const {loggedIn, userId, username } = req.session
+    const materiaId = req.params.id
+    Materia.findById(materiaId)
+        .then(materia => {
+            if (!loggedIn || materia.owner != userId) {
+                res.redirect('/error?error=this%20is%20not%20your%20materia')
+            } else {
+                res.render('materias/edit', {materia, username, loggedIn, userId})
+            }
+        })
+        .catch(err=> res.redirect(`/error?error=${err}`))
+
+})
+
 router.put("/:id", (req,res) => {
     const id = req.params.id
     const userId = req.session.userId
+    req.body.common = req.body.common === 'on' ? false : true
     Materia.findById(id)
         .then((materia) => {
             if (!req.session.loggedIn || userId != materia.owner) {
+                res.redirect('/error?error=this%20is%20not%20your%20materia')
                 res.sendStatus(401)
                 return
             } else {
                 materia.updateOne(req.body)
                     .then(query => {
                         console.log('updated', query)
-                        res.sendStatus(204)
+                        res.redirect('/materias')
                         return
                     })
-                    .catch(err => res.json(err))
+                    .catch(err=> res.redirect(`/error?error=${err}`))
             }
         })
-        .catch(err => res.json(err))
+        .catch(err=> res.redirect(`/error?error=${err}`))
 })
 
 //delete 

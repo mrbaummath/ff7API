@@ -1,0 +1,26 @@
+{% layout 'layout.liquid' %}
+{% block content %}
+
+    <div class="container-sm">
+        <form action="/materias/{{materia.id}}?_method=PUT" method="POST">
+            <fieldset>
+                <legend>Edit the {{materia.name}} Materia </legend>
+                <label class="form-label">Name: </label>
+                <input class="form-control" type="text" name="name" value="{{materia.name}}" placeholder="enter new name" required>    
+                <label class="form-label">Color: </label>
+                <input class="form-control" type="text" name="color" value="{{materia.color}}" placeholder="enter new color" required>
+                <label class="form-label">AP to Master: </label>
+                <input class="form-control" type="number" name="maxAP" value="{{materia.maxAP}}" placeholder="enter AP required to master" required> 
+                <label class="form-label">Rare? </label>
+                 {% if materia.common == false %}
+                    <input class="form-check-input" type="checkbox" name="common" checked>
+                {% else %}
+                    <input class="form-check-input" type="checkbox" name="common">
+                {% endif %}
+            </fieldset>
+            <input clas="btn btn-success" type="submit" value="submit changes">
+        </form>
+    </div>
+
+
+{% endblock %}
