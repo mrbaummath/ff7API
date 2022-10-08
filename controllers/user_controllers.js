@@ -25,7 +25,7 @@ router.post('/signup', async (req, res) => {
     User.create(req.body)
         .then(user => {
             console.log(user)
-            res.status(201).json({ username: user.username })
+            res.redirect('/users/login')
         })
         .catch(err => console.log(err))
 })
@@ -51,18 +51,18 @@ router.post('/login', (req, res) => {
                 res.redirect('/materias')
                 return
             } else {
-                res.json({ error: 'username or password incorrect' })
+                res.redirect(`/error?error=username%20or%20password%20incorrect`)
                 return
             }
 
         } else {
-            res.json({ error: 'user dne' })
+            res.redirect(`/error?error=user%20does%20not%20exist`)
             return
         }
     })
     .catch(err => {
         console.log(err)
-        res.json(err)
+        res.redirect(`/error?error=${err}`)
     })
 })
 
@@ -74,7 +74,7 @@ router.delete('/logout', (req,res) => {
     req.session.destroy(err => {
         console.log('logged out', req.session)
         console.log('error on logout?', err)
-        res.sendStatus(204)
+        res.redirect('/')
         return
     })
 })
