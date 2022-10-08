@@ -15,9 +15,7 @@ router.get("/", (req, res)=> {
             res.render('materias/index', { materias, username, loggedIn, userId })
             return
         })
-        .catch((error) => {
-            res.json({ error })
-        })
+        .catch(err => res.redirect(`/error?error=${err}`))
 })
 
 //GET route for index by ownership
@@ -28,7 +26,7 @@ router.get("/mine", (req, res) => {
             res.render('materias/index', { materias, username, loggedIn, userId } )
             return
         })
-        .catch(err => console.log(err))
+        .catch(err => res.redirect(`/error?error=${err}`))
 })
 
 //create
@@ -48,7 +46,7 @@ router.post("/", (req, res) => {
             res.redirect('/materias')
             return
         })
-        .catch(err => console.log(err))
+        .catch(err => res.redirect(`/error?error=${err}`))
 })
 
 //update 

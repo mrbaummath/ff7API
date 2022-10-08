@@ -32,7 +32,18 @@ app.use('/users', UserRouter)
 app.use('/spells', spellRouter)
 
 
+//error route
+app.get('/error', (req, res) => {
+    const { username, loggedIn, userId } = req.session
+    const error = req.query.error || 'This page does not exist'
 
+    res.render('error.liquid', { error, username, loggedIn, userId })
+})
+
+//catchall error route
+app.all('*', (req, res) => {
+    res.redirect('/error')
+})
 
 //Server listener
 const PORT = process.env.PORT
