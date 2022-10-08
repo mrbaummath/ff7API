@@ -8,26 +8,25 @@ const router = express.Router()
 //Routes
 
 //create spell
+
+
+//POST for create spell
 router.post('/:materiaId', (req,res) => {
     if(!req.session.loggedIn) {
-        res.sendStatus(401)
+        res.redirect('/error?error=you%20are%20not%20logged%20in')
         return
     } else {
         const materiaId = req.params.materiaId
         req.body.owner = req.session.userId
         Materia.findById(materiaId)
             .then(materia => {
-                if (materia.owner != req.session.userId) {
-                    res.sendStatus(401)
-                    return
-                } else {
-                    materia.spells.push(req.body)
-                    materia.save()
-                    res.sendStatus(201)
-                    return
-                }
+                materia.spells.push(req.body)
+                materia.save()
+                res.redirect(`/materias/${materiaId}`)
+                return
+                
             })
-            .catch(err => console.log(err))
+            .catch(err=> res.redirect(`/error?error=${err}`))
     }
 })
 
@@ -40,13 +39,13 @@ router.delete('/delete/:materiaId/:spellId', (req,res) => {
         .then(materia => {
             const spell = materia.spells.id(spellId)
             console.log(spell, materia)
-            if (!req.session.loggedIn || materia.owner != userId) {
-                res.sendStatus(401)
+            if (!req.session.loggedIn || spell.owner != userId) {
+                res.redirect('/error?error=you%20are%20not%20authorized')
                 return
             } else {
                 spell.remove()
                 materia.save()
-                res.sendStatus(204)
+                res.redirect(`/materias/${materiaId}`)
                 return
             }
         })

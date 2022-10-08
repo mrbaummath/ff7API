@@ -1,0 +1,17 @@
+{% block content %}
+    <div class="card mb-4 shadow">
+        <div class="card-body">
+            <h3 class="card-title">{{spell.name}}</h3>
+            <p class="card-text">MP to cast: {{spell.mpCost}}</p>
+            <p class="card-text">AP needed: {{spell.apReq}}</p>
+            <div class="d-flex justify-content-between">
+                <small>added by: {{spell.owner.username}} </small>
+                {% if spell.owner == userId %}
+                    <form action="/spells/delete/{{materia.id}}/{{spell.id}}?_method=DELETE" method="POST">
+                        <input class="btn btn-danger" type="submit" value="X">
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

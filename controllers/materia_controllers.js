@@ -116,6 +116,7 @@ router.delete('/:id', (req,res) => {
 router.get('/:id', (req,res) => {
     const id = req.params.id
     Materia.findById(id)
+        .populate("spells.owner", "username")
         .then(materia => {
             const { username, loggedIn, userId } = req.session
             res.render('materias/show', { materia, username, loggedIn, userId } )
